@@ -1,0 +1,7 @@
+:host ::ng-deep button {
+    margin-right: .5em;
+}
+
+.confirmButton {
+    margin: 0 0.5rem;
+}

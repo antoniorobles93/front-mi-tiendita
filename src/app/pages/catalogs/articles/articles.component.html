@@ -1,0 +1,58 @@
+<p-card>
+    <p-table [value]="articulos">
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                Listado De Articulos
+                <p-button (click)="showModalArticulos()" label="Añadir Articulo" icon="pi pi-plus"
+                    styleClass="p-button"></p-button>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Marca</th>
+                <th>Precio</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-articulos>
+            <tr>
+                <td>{{articulos.id_articulo}}</td>
+                <td>{{articulos.nombre_articulo}}</td>
+                <td>{{articulos.marca_articulo}}</td>
+                <td>{{articulos.precio_articulo | currency:'USD'}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+
+<p-dialog [(visible)]="displayModalArticulos" [style]="{width: '450px'}" header="Nuevo Articulo" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="p-field">
+            <label for="name">Nombre</label>
+            <input type="text" pInputText [(ngModel)]="articulo.nombre" required autofocus />
+            <small class="p-error" *ngIf="submitted && !articulo.nombre">Nombre requerido.</small>
+        </div>
+        <div class="p-field">
+            <label for="inventoryStatus">Marca</label>
+            <p-dropdown placeholder="Selecione..." [options]="marcas" [(ngModel)]="marca" optionLabel="nombre_marca" optionValue="id_marca"></p-dropdown>
+        </div>
+        <div class="p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="price">Precio Articulo</label>
+                <p-inputNumber id="price" [(ngModel)]="articulo.precio" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+                <small class="p-error" *ngIf="submitted && !articulo.precio">Precio requerido.</small>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text"
+            (click)="closeModalArticulos()"></button>
+        <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text"
+            (click)="GuardarMarca()"></button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+<p-toast baseZIndex="100"></p-toast>
