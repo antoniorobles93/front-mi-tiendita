@@ -44,7 +44,7 @@ export class SalesComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private salesService: SalesService,
     private router: Router,
-    private generalServicesService:GeneralServicesService
+    private generalServicesService: GeneralServicesService
   ) { }
 
   ngOnInit(): void {
@@ -132,7 +132,7 @@ export class SalesComponent implements OnInit {
       }
     } else {
 
-      this.shopping.push(
+      /*this.shopping.push(
         {
           id_articulo: event.data.id_articulo,
           nombre_articulo: event.data.nombre_articulo,
@@ -141,16 +141,15 @@ export class SalesComponent implements OnInit {
           precio_articulo: event.data.precio_articulo,
           importe_articulo: event.data.precio_articulo * 1
         }
-      );
+      );*/
 
-      //Valida si el articulo ya esta insertado y lo esta le añade 1
-      /*for (let i = 0; i < this.shopping.length; i++) {
-        console.log("this.shopping[i].id_articulo = > "+this.shopping[i].id_articulo);
-        console.log("event.data.id_articulo = > "+event.data.id_articulo);
+      //Valida si el articulo ya esta insertado y si lo esta le añade 1
+      for (let i = 0; i < this.shopping.length; i++) {
         if (this.shopping[i].id_articulo == event.data.id_articulo) {
-          console.log("aqui");
-          this.shopping[i].cantidad_articulo += 1;
-        }else{
+          let cantidadArticulo = this.shopping[i].cantidad_articulo
+          this.shopping.filter(someobject => someobject.id_articulo == event.data.id_articulo)
+            .forEach(someobject => someobject.cantidad_articulo = cantidadArticulo + 1);
+        } else {
           this.shopping.push(
             {
               id_articulo: event.data.id_articulo,
@@ -163,29 +162,13 @@ export class SalesComponent implements OnInit {
           );
         }
         break;
-      }*/
-
-
-    }
-
-
-    this.TotalAndSubTotal();
-
-
-    /*this.shopping = [
-      {
-        des_articulo:'Celular',
-        marca_articulo:'Xiaomi',
-        cantidad_articulo:'1',
-        precio_articulo:'1000',
-        importe_articulo:'1000'
       }
-    ]*/
+    }
+    this.TotalAndSubTotal();
   }
 
   onEditCancel(event: any) {
     console.log(event);
-    console.log('Cancel');
   }
 
   onEditComplete(event: any) {
@@ -226,7 +209,7 @@ export class SalesComponent implements OnInit {
         total += parseInt(arr[i].importe_articulo);
     }
     this.subTotal = total;
-    this.iva = ((this.porcentajeIva / 100) * total).toFixed(2);
+    this.iva = ((this.porcentajeIva / 100.00) * total).toFixed(2);
     this.total = parseInt(this.subTotal) + parseInt(this.iva);
     this.guardarDisabled = false;
   }
@@ -244,37 +227,12 @@ export class SalesComponent implements OnInit {
         this.router.navigate(['/pages/sales-list']);
       }
     })
-    /*const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: 'btn btn-success',
-        cancelButton: 'btn btn-danger'
-      },
-      buttonsStyling: false
-    })
-
-    swalWithBootstrapButtons.fire({
-      title: 'Estas seguro?',
-      text: "La venta no podra ser realizada!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Si!',
-      cancelButtonText: 'No!',
-      reverseButtons: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        swalWithBootstrapButtons.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
-      }
-    })*/
   }
 
   guardarVenta() {
     Swal.fire({
-      title: 'Do you want to save the changes?',
-      text: "You won't be able to revert this!",
+      title: 'Estas seguro?',
+      text: "Desea guardar su venta?",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si!',
