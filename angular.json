@@ -49,7 +49,8 @@
               "node_modules/primeflex/src/_text.scss",
               "node_modules/primeflex/src/flexbox/_flexbox.scss",
               "node_modules/primeflex/src/_spacing.scss",
-              "node_modules/primeflex/src/_elevation.scss"
+              "node_modules/primeflex/src/_elevation.scss",
+              "src/app/@theme/styles/primeng_override.scss"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
